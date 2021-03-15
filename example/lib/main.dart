@@ -5,7 +5,10 @@ import 'package:sup/sup.dart';
 import 'package:example/examples.dart';
 import 'package:example/sup_configs.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

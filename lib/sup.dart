@@ -72,21 +72,21 @@ enum SupAlignment { start, center, end }
 /// ## More information
 /// For more information, check out the [repository](https://github.com/maestralsol/sup).
 class Sup extends StatelessWidget {
-  final Widget image;
-  final Widget title;
-  final Widget subtitle;
-  final Widget bottom;
-  final SupAlignment alignment;
+  final Widget? image;
+  final Widget? title;
+  final Widget? subtitle;
+  final Widget? bottom;
+  final SupAlignment? alignment;
 
   /// Spacing between the children (i.e. image, title, etc.).
-  final double spacing;
+  final double? spacing;
 
   /// Padding _around_ the widget.
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// Used to hold a reference to to config passed to [Sup.from]
   /// for access during build.
-  SupConfig _config;
+  SupConfig? _config;
 
   /// Creates a Sup instance.
   ///
@@ -106,10 +106,10 @@ class Sup extends StatelessWidget {
   /// Pass parameters to override config.
   factory Sup.from(
     SupConfig config, {
-    Widget image,
-    Text title,
-    Text subtitle,
-    Widget bottom,
+    Widget? image,
+    Text? title,
+    Text? subtitle,
+    Widget? bottom,
   }) {
     return Sup(
       image: image,
@@ -119,7 +119,7 @@ class Sup extends StatelessWidget {
     ).._config = config;
   }
 
-  _columnAlignmentFromSupAlignment(SupAlignment alignment) {
+  _columnAlignmentFromSupAlignment(SupAlignment? alignment) {
     switch (alignment) {
       case SupAlignment.start:
         return CrossAxisAlignment.start;
@@ -127,10 +127,12 @@ class Sup extends StatelessWidget {
         return CrossAxisAlignment.center;
       case SupAlignment.end:
         return CrossAxisAlignment.end;
+      case null:
+        return CrossAxisAlignment.center;
     }
   }
 
-  _textAlignFromSupAlignment(SupAlignment alignment) {
+  _textAlignFromSupAlignment(SupAlignment? alignment) {
     switch (alignment) {
       case SupAlignment.start:
         return TextAlign.start;
@@ -138,6 +140,8 @@ class Sup extends StatelessWidget {
         return TextAlign.center;
       case SupAlignment.end:
         return TextAlign.end;
+      case null:
+        return CrossAxisAlignment.center;
     }
   }
 
@@ -182,11 +186,11 @@ class Sup extends StatelessWidget {
     }
 
     return Padding(
-      padding: config.padding,
+      padding: config.padding!,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: _columnAlignmentFromSupAlignment(config.alignment),
-        children: <Widget>[
+        children: <Widget?>[
           // Image
           if (config.image != null) ...[
             config.image,
@@ -196,12 +200,12 @@ class Sup extends StatelessWidget {
           // Title
           if (config.title != null) ...[
             DefaultTextStyle(
-              style: theme.textTheme.title.copyWith(
+              style: theme.textTheme.headline6!.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
               textAlign: _textAlignFromSupAlignment(config.alignment),
-              child: config.title,
+              child: config.title!,
             ),
             SizedBox(height: config.spacing),
           ],
@@ -209,11 +213,11 @@ class Sup extends StatelessWidget {
           // Subtitle
           if (config.subtitle != null) ...[
             DefaultTextStyle(
-              style: theme.textTheme.caption.copyWith(
+              style: theme.textTheme.caption!.copyWith(
                 fontSize: 16,
               ),
               textAlign: _textAlignFromSupAlignment(config.alignment),
-              child: config.subtitle,
+              child: config.subtitle!,
             ),
           ],
 
@@ -222,7 +226,7 @@ class Sup extends StatelessWidget {
             SizedBox(height: config.spacing),
             config.bottom,
           ],
-        ],
+        ] as List<Widget>,
       ),
     );
   }

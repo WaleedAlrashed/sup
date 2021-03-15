@@ -6,13 +6,13 @@ enum _QuickSupType { error, empty }
 /// A [Sup] widget that provides out-of-the-box implementation
 /// for quick and simple use cases.
 class QuickSup extends StatelessWidget {
-  final _QuickSupType type;
-  final Widget image;
-  final String title;
-  final String subtitle;
-  final Function onRetry;
-  final String retryText;
-  final bool wrapImageInCircle;
+  final _QuickSupType? type;
+  final Widget? image;
+  final String? title;
+  final String? subtitle;
+  final Function? onRetry;
+  final String? retryText;
+  final bool? wrapImageInCircle;
 
   QuickSup._({
     this.type,
@@ -30,12 +30,12 @@ class QuickSup extends StatelessWidget {
   /// being hidden. Pass [retryText] to override the default
   /// value.
   factory QuickSup.error(
-      {Widget image,
-      String title,
-      String subtitle,
-      Function onRetry,
-      String retryText,
-      bool wrapImageInCircle}) {
+      {Widget? image,
+      String? title,
+      String? subtitle,
+      Function? onRetry,
+      String? retryText,
+      bool? wrapImageInCircle}) {
     return QuickSup._(
       type: _QuickSupType.error,
       image: image,
@@ -52,10 +52,10 @@ class QuickSup extends StatelessWidget {
   /// Omitting any parameter will result in that section
   /// being hidden.
   factory QuickSup.empty({
-    Widget image,
-    String title,
-    String subtitle,
-    bool wrapImageInCircle,
+    Widget? image,
+    String? title,
+    String? subtitle,
+    bool? wrapImageInCircle,
   }) {
     return QuickSup._(
       type: _QuickSupType.empty,
@@ -92,13 +92,13 @@ class QuickSup extends StatelessWidget {
       );
     }
 
-    final t = title == null ? null : Text(title);
-    final s = subtitle == null ? null : Text(subtitle);
+    final t = title == null ? null : Text(title!);
+    final s = subtitle == null ? null : Text(subtitle!);
     final r = onRetry == null
         ? null
         : FlatButton(
-            child: Text(retryText),
-            onPressed: onRetry,
+            child: Text(retryText!),
+            onPressed: onRetry as void Function()?,
             textColor: theme.accentColor,
           );
 

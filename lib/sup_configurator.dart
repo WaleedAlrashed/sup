@@ -19,16 +19,15 @@ import 'package:sup/sup.dart';
 /// );
 /// ```
 class SupConfigurator extends InheritedWidget {
-  final SupConfig defaults;
+  final SupConfig? defaults;
 
   const SupConfigurator({
     this.defaults,
-    @required Widget child,
+    required Widget child,
   }) : super(child: child);
 
-  static SupConfigurator of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(SupConfigurator)
-        as SupConfigurator;
+  static SupConfigurator? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType() as SupConfigurator?;
   }
 
   @override
